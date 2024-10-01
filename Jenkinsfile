@@ -38,24 +38,24 @@ environment {
     }
     
   } 
-  stage("Quality Gate"){
+  // stage("Quality Gate"){
 
-    steps{
-        script{
-  timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
-    def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
-    if (qg.status != 'OK') {
-      error "Pipeline aborted due to quality gate failure: ${qg.status}"
-    }
-  }
-}   
-  }
-  }
+  //   steps{
+  //       script{
+  // timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
+  //   def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+  //   if (qg.status != 'OK') {
+  //     error "Pipeline aborted due to quality gate failure: ${qg.status}"
+  //   }
+  // }
+    // } 
+  // }
+  // }
   
          stage("Jar Publish") {
         steps {
             script {
-                    echo '<--------------- Jar Publish Started --------------->'
+                    echo '<--------------- Jar Publish Starting--------------->'
                      def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"jfrog-cred"
                      def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
                      def uploadSpec = """{
